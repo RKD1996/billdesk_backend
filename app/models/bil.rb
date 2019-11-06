@@ -1,0 +1,2 @@
+class Bil < ApplicationRecord
+end
