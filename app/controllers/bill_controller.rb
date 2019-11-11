@@ -1,4 +1,5 @@
 class BillController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def index
     total = 0
@@ -13,15 +14,24 @@ class BillController < ApplicationController
   end
 
   def create
-    params[:bills].each do |e|
-      bill = Bil.new(e)
-      if bill.save
-        render :json => {
-          :data => bill
-        }
-      end
-    end
+    bills = Bil.new(all_attr)
+    raise bills.inspect
   end
+
+  private
+  def all_attr
+    params.require(:exp).permit
+  end
+
+  def permit
+  each_pair do |key, value|
+    convert_hashes_to_parameters(key, value)
+    self[key].permit! if self[key].respond_to? :permit!
+  end
+
+  @permitted = true
+  self
+end
 
 
 end

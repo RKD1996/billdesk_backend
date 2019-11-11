@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :bils do
     collection do
       get '/show', to: 'bill#index'
+      post '/create_exp', to: 'bill#create'
     end
   end
 end
