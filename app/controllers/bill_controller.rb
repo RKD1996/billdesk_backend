@@ -1,9 +1,9 @@
 class BillController < ApplicationController
 
-  def show
+  def index
     total = 0
     all_bill = Bil.all.order(created_at: :desc);
-    last_bill = all_bill.fist
+    last_bill = all_bill[0]
     all_bill.map {|e| total = total + e.amt}
     render :json => {
       :bills => all_bill,
@@ -22,5 +22,6 @@ class BillController < ApplicationController
       end
     end
   end
+
 
 end
