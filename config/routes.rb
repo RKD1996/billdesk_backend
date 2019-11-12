@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       get '/show', to: 'bill#index'
       post '/create_exp', to: 'bill#create'
+      post '/get_month_data', to: 'bill#get_month_data'
     end
   end
 end
