@@ -5,26 +5,37 @@ class BillController < ApplicationController
     total = 0
     # all_bill = Bil.all.order(created_at: :desc)
     mon = Time.now.month
-    all_bill=Bil.where('extract(month from date) = ?', mon)
+    all_bill=Bil.where('extract(month from date) = ? AND username = ?', mon, params[:id]).order(date: :desc)
     last_bill = all_bill[0]
     all_bill.map {|e| total += e.amt}
     render :json => {
       :bills => all_bill,
       :total => total,
-      :latest => last_bill
+      :latest => last_bill,
+      :month_code => mon
     }
   end
 
   def get_month_data
     total = 0;
-    all_bill=Bil.where('extract(month from date) = ?', params[:mon])
+    all_bill=Bil.where('extract(month from date) = ? AND username = ?', params[:mon], params[:id]).order(date: :desc)
     last_bill = all_bill[0]
     all_bill.map {|e| total += e.amt}
     render :json => {
       :bills => all_bill,
       :total => total,
-      :latest => last_bill
+      :latest => last_bill,
+      :month_code => params[:mon]
     }
+  end
+
+  def update
+    edit_bill = Bil.find_by_id(params[:id])
+    if edit_bill.update_attributes(edit_params)
+      render :json => {
+        :msg => "Bill Updated"
+      }
+    end
   end
 
   def create
@@ -38,7 +49,10 @@ class BillController < ApplicationController
 
   private
   def bil_params
-    params.require(:bils).permit(:name, :amt, :date)
+    params.require(:bils).permit(:name, :amt, :date, :username)
   end
 
+  def edit_params
+    params.permit(:name, :amt, :date)
+  end
 end

@@ -3,9 +3,16 @@ Rails.application.routes.draw do
 
   resources :bils do
     collection do
-      get '/show', to: 'bill#index'
+      get '/show/:id', to: 'bill#index'
       post '/create_exp', to: 'bill#create'
-      post '/get_month_data', to: 'bill#get_month_data'
+      post '/get_month_data/:id', to: 'bill#get_month_data'
+      post '/edit_expence', to: 'bill#update'
+    end
+  end
+
+  resources :users do
+    collection do
+      post '/login', to: 'users#login'
     end
   end
 end
