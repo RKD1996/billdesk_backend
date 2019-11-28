@@ -15,4 +15,8 @@ Rails.application.routes.draw do
       post '/login', to: 'users#login'
     end
   end
+
+
+  get '/get_month_and_year_data/:id', to: 'analyze#get_month_and_year_data'
+  get '/get_monthly_data/:id&:month&:year', to: 'analyze#get_monthly_data'
 end
