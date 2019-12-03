@@ -7,6 +7,7 @@ class BillController < ApplicationController
     mon = Time.now.month
     all_bill=Bil.where('extract(month from date) = ? AND username = ?', mon, params[:id]).order(date: :desc)
     last_bill = all_bill[0]
+    puts "#{all_bill}"
     all_bill.map {|e| total += e.amt}
     render :json => {
       :bills => all_bill,
