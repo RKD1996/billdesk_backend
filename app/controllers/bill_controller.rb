@@ -2,7 +2,7 @@ class BillController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    total = 0
+    total = 0.0
     # all_bill = Bil.all.order(created_at: :desc)
     mon = Time.now.month
     all_bill=Bil.where('extract(month from date) = ? AND username = ?', mon, params[:id]).order(date: :desc)
