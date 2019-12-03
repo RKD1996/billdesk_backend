@@ -13,7 +13,8 @@ class BillController < ApplicationController
       :total => total,
       :latest => last_bill,
       :month_code => mon
-    }
+    },
+    :status => 200
   end
 
   def get_month_data
@@ -26,7 +27,8 @@ class BillController < ApplicationController
       :total => total,
       :latest => last_bill,
       :month_code => params[:mon]
-    }
+    },
+    :status => 200
   end
 
   def update
@@ -34,7 +36,8 @@ class BillController < ApplicationController
     if edit_bill.update_attributes(edit_params)
       render :json => {
         :msg => "Bill Updated"
-      }
+      },
+      :status => 200
     end
   end
 
@@ -43,7 +46,8 @@ class BillController < ApplicationController
     if bills.save
       render :json => {
         :msg => "successufully saved"
-      }
+      },
+      :status => 200
     end
   end
 
