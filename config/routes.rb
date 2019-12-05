@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       post '/login', to: 'users#login'
+      get '/reset_token/:id', to: 'users#generate_reset_token'
+      post '/change_password/:id/:token', to: 'users#reset_password'
     end
   end
 
